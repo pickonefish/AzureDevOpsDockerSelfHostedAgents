@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pr: none
+
+jobs:
+  - job: "BuildAzureDevOpsAgent"
+    displayName: "Build Azure DevOps Agent"
+    pool: dockeragent
+    variables:
+     - name: AGENT_VERSION
+       value: '2.200.2'
+     - name: TARGETARCH
+       value: 'amd64'
+    
+
+    steps:
+
+      - task: Bash@3
+        displayName: 'docker build'
+        inputs:
+          targetType: 'inline'
+          script: |
+           docker build -t pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH) --build-arg=$(AGENT_VERSION) --build-arg=$(TARGETARCH) .
+        condition: succeededOrFailed()
