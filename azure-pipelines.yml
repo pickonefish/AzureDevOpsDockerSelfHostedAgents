@@ -26,6 +26,6 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-           docker build -t pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH) --build-arg=$(AGENT_VERSION) --build-arg=$(TARGETARCH) .
+           docker build -t pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH) --build-arg AGENT_VERSION=$(AGENT_VERSION) --build-arg TARGETARCH=$(TARGETARCH) .
            docker push pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH)
         condition: succeededOrFailed()
