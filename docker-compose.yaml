@@ -1,0 +1,10 @@
+version: "3"
+services:
+  azure_devops_agent:
+    container_name: azure_devops_agent
+    image: pickonefish/azure-devops-agent:2.200.2-amd64
+    environment:
+      - AZP_URL=https://dev.azure.com/
+      - AZP_TOKEN=
+      - AZP_AGENT_NAME=
+      - AZP_POOL=
