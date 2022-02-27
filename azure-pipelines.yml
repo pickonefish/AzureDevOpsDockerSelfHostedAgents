@@ -20,6 +20,10 @@ jobs:
     
 
     steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'Docker Connection'
+          command: 'login'
 
       - task: Bash@3
         displayName: 'docker build'
