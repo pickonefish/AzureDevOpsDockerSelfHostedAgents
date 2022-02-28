@@ -24,22 +24,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     locales \
     apt-transport-https
 
-RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
-    locale-gen
-
 ENV TZ=Asia/Taipei
 ENV LANG="zh_TW.UTF-8"
-ENV LC_NUMERIC="lzh_TW"
-ENV LC_TIME="lzh_TW"
-ENV LC_COLLATE="lzh_TW"
-ENV LC_MONETARY="lzh_TW"
-ENV LC_MESSAGES="lzh_TW"
-ENV LC_PAPER="lzh_TW"
-ENV LC_NAME="lzh_TW"
-ENV LC_ADDRESS="lzh_TW"
-ENV LC_TELEPHONE="lzh_TW"
-ENV LC_MEASUREMENT="lzh_TW"
-ENV LC_IDENTIFICATION="lzh_TW"
+ENV LC_NUMERIC="zh_TW.UTF-8"
+ENV LC_TIME="zh_TW.UTF-8"
+ENV LC_COLLATE="zh_TW.UTF-8"
+ENV LC_MONETARY="zh_TW.UTF-8"
+ENV LC_MESSAGES="zh_TW.UTF-8"
+ENV LC_PAPER="zh_TW.UTF-8"
+ENV LC_NAME="zh_TW.UTF-8"
+ENV LC_ADDRESS="zh_TW.UTF-8"
+ENV LC_TELEPHONE="zh_TW.UTF-8"
+ENV LC_MEASUREMENT="zh_TW.UTF-8"
+ENV LC_IDENTIFICATION="zh_TW.UTF-8"
+
+RUN locale-gen zh_TW.UTF-8"
 
 # Java / Apache Maven
 RUN apt-get install openjdk-8-jdk
