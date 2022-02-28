@@ -1,17 +1,18 @@
 FROM ubuntu:18.04
 
+ENV TZ=Asia/Taipei
 ENV LANG="en_US.UTF-8"
-ENV LC_NUMERIC="en_US.UTF-8"
-ENV LC_TIME="en_US.UTF-8"
-ENV LC_COLLATE="en_US.UTF-8"
-ENV LC_MONETARY="en_US.UTF-8"
-ENV LC_MESSAGES="en_US.UTF-8"
-ENV LC_PAPER="en_US.UTF-8"
-ENV LC_NAME="en_US.UTF-8"
-ENV C_ADDRESS="en_US.UTF-8"
-ENV LC_TELEPHONE="en_US.UTF-8"
-ENV LC_MEASUREMENT="en_US.UTF-8"
-ENV LC_IDENTIFICATION="en_US.UTF-8"
+ENV LC_NUMERIC="lzh_TW"
+ENV LC_TIME="lzh_TW"
+ENV LC_COLLATE="lzh_TW"
+ENV LC_MONETARY="lzh_TW"
+ENV LC_MESSAGES="lzh_TW"
+ENV LC_PAPER="lzh_TW"
+ENV LC_NAME="lzh_TW"
+ENV LC_ADDRESS="lzh_TW"
+ENV LC_TELEPHONE="lzh_TW"
+ENV LC_MEASUREMENT="lzh_TW"
+ENV LC_IDENTIFICATION="lzh_TW"
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
