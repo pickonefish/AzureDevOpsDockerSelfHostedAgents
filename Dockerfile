@@ -24,12 +24,11 @@ RUN apt-get install openjdk-8-jdk
 
 RUN apt-get install npm
 
-RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 12.11.1
 
+RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
@@ -39,6 +38,10 @@ RUN source $NVM_DIR/nvm.sh \
 # add node and npm to path so the commands are available
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+RUN node -v
+RUN npm -v
+RUN nvm --version
 
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 RUN echo \
