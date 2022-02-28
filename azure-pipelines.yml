@@ -30,6 +30,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-           docker build -t pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH) --build-arg AGENT_VERSION=$(AGENT_VERSION) --build-arg TARGETARCH=$(TARGETARCH) .
-           docker push pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH)
+            VERSION_TAG=`git describe --always --abbrev=7`
+            docker build -t pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH).$(VERSION_TAG) --build-arg AGENT_VERSION=$(AGENT_VERSION) --build-arg TARGETARCH=$(TARGETARCH) .
+            docker push pickonefish/azure-devops-agent:$(AGENT_VERSION)-$(TARGETARCH).$(VERSION_TAG)
         condition: succeededOrFailed()
