@@ -25,9 +25,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Java / Apache Maven
 RUN apt-get install openjdk-8-jdk
+# https://maven.apache.org/download.cgi
 RUN apt install maven
 
 # .net-core
+# https://docs.microsoft.com/zh-tw/dotnet/core/install/linux-ubuntu#1804-
 RUN wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
 RUN rm packages-microsoft-prod.deb
@@ -39,6 +41,7 @@ RUN apt-get install -y dotnet-sdk-6.0
 RUN apt-get install npm
 
 # nvm environment variables
+# https://github.com/nvm-sh/nvm
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 12.11.1
 
