@@ -1,19 +1,5 @@
 FROM ubuntu:18.04
 
-ENV TZ=Asia/Taipei
-ENV LANG="en_US.UTF-8"
-ENV LC_NUMERIC="lzh_TW"
-ENV LC_TIME="lzh_TW"
-ENV LC_COLLATE="lzh_TW"
-ENV LC_MONETARY="lzh_TW"
-ENV LC_MESSAGES="lzh_TW"
-ENV LC_PAPER="lzh_TW"
-ENV LC_NAME="lzh_TW"
-ENV LC_ADDRESS="lzh_TW"
-ENV LC_TELEPHONE="lzh_TW"
-ENV LC_MEASUREMENT="lzh_TW"
-ENV LC_IDENTIFICATION="lzh_TW"
-
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -35,7 +21,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg \
     lsb-release \
     wget \
+    locales \
     apt-transport-https
+
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+
+ENV TZ=Asia/Taipei
+ENV LANG="en_US.UTF-8"
+ENV LC_NUMERIC="lzh_TW"
+ENV LC_TIME="lzh_TW"
+ENV LC_COLLATE="lzh_TW"
+ENV LC_MONETARY="lzh_TW"
+ENV LC_MESSAGES="lzh_TW"
+ENV LC_PAPER="lzh_TW"
+ENV LC_NAME="lzh_TW"
+ENV LC_ADDRESS="lzh_TW"
+ENV LC_TELEPHONE="lzh_TW"
+ENV LC_MEASUREMENT="lzh_TW"
+ENV LC_IDENTIFICATION="lzh_TW"
 
 # Java / Apache Maven
 RUN apt-get install openjdk-8-jdk
