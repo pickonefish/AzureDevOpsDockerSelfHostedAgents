@@ -38,7 +38,7 @@ ENV LC_TELEPHONE="zh_TW.UTF-8"
 ENV LC_MEASUREMENT="zh_TW.UTF-8"
 ENV LC_IDENTIFICATION="zh_TW.UTF-8"
 
-RUN locale-gen zh_TW.UTF-8"
+RUN locale-gen zh_TW.UTF-8
 
 # Java / Apache Maven
 RUN apt-get install openjdk-8-jdk
