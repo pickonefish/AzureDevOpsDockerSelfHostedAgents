@@ -1,5 +1,18 @@
 FROM ubuntu:18.04
 
+ENV LANG="en_US.UTF-8"
+ENV LC_NUMERIC="en_US.UTF-8"
+ENV LC_TIME="en_US.UTF-8"
+ENV LC_COLLATE="en_US.UTF-8"
+ENV LC_MONETARY="en_US.UTF-8"
+ENV LC_MESSAGES="en_US.UTF-8"
+ENV LC_PAPER="en_US.UTF-8"
+ENV LC_NAME="en_US.UTF-8"
+ENV C_ADDRESS="en_US.UTF-8"
+ENV LC_TELEPHONE="en_US.UTF-8"
+ENV LC_MEASUREMENT="en_US.UTF-8"
+ENV LC_IDENTIFICATION="en_US.UTF-8"
+
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
