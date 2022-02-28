@@ -28,7 +28,7 @@ RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
 
 ENV TZ=Asia/Taipei
-ENV LANG="en_US.UTF-8"
+ENV LANG="zh_TW.UTF-8"
 ENV LC_NUMERIC="lzh_TW"
 ENV LC_TIME="lzh_TW"
 ENV LC_COLLATE="lzh_TW"
