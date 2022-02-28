@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl1.0 \
     gnupg \
     lsb-release \
+    wget \
     apt-transport-https
 
 # Java / Apache Maven
