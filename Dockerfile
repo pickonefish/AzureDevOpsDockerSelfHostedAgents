@@ -60,13 +60,14 @@ RUN apt-get install npm
 # nvm environment variables
 # https://github.com/nvm-sh/nvm
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 12.11.1
+ENV NODE_VERSION 12.20
 
 RUN mkdir /usr/local/nvm -p
 RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
+    && nvm install 12.11.1 \
     && nvm alias default $NODE_VERSION \
     && nvm use default
 
