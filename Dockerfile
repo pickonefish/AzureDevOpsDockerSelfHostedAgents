@@ -42,7 +42,7 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN node -v
 RUN npm -v
-RUN nvm --version
+RUN source $NVM_DIR/nvm.sh && nvm --version
 
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 RUN echo \
