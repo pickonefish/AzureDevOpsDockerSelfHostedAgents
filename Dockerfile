@@ -28,6 +28,7 @@ RUN apt-get install npm
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 12.11.1
 
+RUN mkdir /usr/local/nvm -p
 RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
