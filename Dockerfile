@@ -19,9 +19,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     netcat \
     libssl1.0 \
     gnupg \
-    lsb-release
-RUN apt-get install openjdk-8-jdk
+    lsb-release \
+    apt-transport-https
 
+# Java / Apache Maven
+RUN apt-get install openjdk-8-jdk
+RUN apt install maven
+
+# .net-core
+RUN wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
+RUN rm packages-microsoft-prod.deb
+
+RUN apt-get update
+RUN apt-get install -y dotnet-sdk-6.0
+
+# Nodejs / NPM / NVM
 RUN apt-get install npm
 
 # nvm environment variables
@@ -44,6 +57,7 @@ RUN node -v
 RUN npm -v
 RUN source $NVM_DIR/nvm.sh && nvm --version
 
+# Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 RUN echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
@@ -52,6 +66,9 @@ RUN apt-get update
 RUN apt-get install docker-ce docker-ce-cli containerd.io
 
 RUN rm -rf /var/lib/apt/lists/*
+
+
+# Azure DevOps Agent
 
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
