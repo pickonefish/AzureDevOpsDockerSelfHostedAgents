@@ -75,6 +75,11 @@ RUN source $NVM_DIR/nvm.sh \
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+RUN rm -f /usr/bin/node
+RUN rm -f /usr/bin/npm
+RUN ln -sf $(which node) /usr/bin/node
+RUN ln -sf $(which npm) /usr/bin/npm
+
 RUN node -v
 RUN npm -v
 RUN source $NVM_DIR/nvm.sh && nvm --version
