@@ -80,9 +80,9 @@ RUN rm -f /usr/bin/npm
 RUN ln -sf $(which node) /usr/bin/node
 RUN ln -sf $(which npm) /usr/bin/npm
 
-RUN node -v
-RUN npm -v
-RUN source $NVM_DIR/nvm.sh && nvm --version
+#RUN node -v
+#RUN npm -v
+#RUN source $NVM_DIR/nvm.sh && nvm --version
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
