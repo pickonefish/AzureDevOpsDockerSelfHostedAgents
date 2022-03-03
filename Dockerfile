@@ -56,9 +56,11 @@ RUN apt-get install -y dotnet-sdk-6.0
 
 # Nodejs / NPM / NVS
 WORKDIR /app
-RUN git clone https://github.com/jasongin/nvs
-RUN chmod 777 nvs/nvs.sh
-RUN nvs/nvs.sh install
+ENV NVS_HOME="/app/.nvs"
+
+RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
+RUN chmod 777 .nvs/nvs.sh
+RUN . "$NVS_HOME/nvs.sh" install
 RUN source ~/.bashrcs
 
 RUN nvs add 12.20
