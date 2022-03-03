@@ -54,35 +54,17 @@ RUN rm packages-microsoft-prod.deb
 RUN apt-get update
 RUN apt-get install -y dotnet-sdk-6.0
 
-# Nodejs / NPM / NVM
-RUN apt-get install npm
+# Nodejs / NPM / NVS
+WORKDIR /app
+RUN git clone https://github.com/jasongin/nvs
+RUN nvs/nvs.sh" install
+RUN source ~/.bashrcs
 
-# nvm environment variables
-# https://github.com/nvm-sh/nvm
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 12.20
+RUN nvs add 12.20
+RUN nvs use 12.20 
 
-RUN mkdir /usr/local/nvm -p
-RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-# install node and npm
-RUN source $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm install 12.11.1 \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
-
-# add node and npm to path so the commands are available
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
-RUN rm -f /usr/bin/node
-RUN rm -f /usr/bin/npm
-RUN ln -sf $NVM_DIR/versions/node/v$NODE_VERSION/bin/node /usr/bin/node
-RUN ln -sf $NVM_DIR/versions/node/v$NODE_VERSION/bin/npm /usr/bin/npm
-
-#RUN node -v
-#RUN npm -v
-#RUN source $NVM_DIR/nvm.sh && nvm --version
+RUN /usr/bin/node -v
+RUN /usr/bin/npm -v
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
