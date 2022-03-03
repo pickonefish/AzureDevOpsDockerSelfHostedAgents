@@ -61,10 +61,9 @@ ENV NVS_HOME="/root/.nvs"
 RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
 RUN chmod 777 .nvs/nvs.sh
 RUN . "$NVS_HOME/nvs.sh" install
-# RUN source /root/.bashrc
 
-RUN ./.nvs/nvs add 12.20
-RUN ./.nvs/nvs use 12.20 
+RUN source /root/.bashrc & nvs add 12.20
+RUN source /root/.bashrc & nvs use 12.20 
 
 RUN /usr/bin/node -v
 RUN /usr/bin/npm -v
