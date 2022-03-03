@@ -55,8 +55,8 @@ RUN apt-get update
 RUN apt-get install -y dotnet-sdk-6.0
 
 # Nodejs / NPM / NVS
-WORKDIR /app
-ENV NVS_HOME="/app/.nvs"
+WORKDIR /root
+ENV NVS_HOME="/root/.nvs"
 
 RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
 RUN chmod 777 .nvs/nvs.sh
