@@ -1,11 +1,5 @@
 FROM ubuntu:18.04
 
-ENV FNM_VERSION=1.31.0
-ENV FNM_DIR=/opt/fnm
-ENV FNM_INTERACTIVE_CLI=false
-ENV S6_VERSION=2.2.0.3
-ENV NODE_JS_VERSION=12.14.1
-
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -62,6 +56,13 @@ RUN apt-get update
 RUN apt-get install -y dotnet-sdk-6.0
 
 # copy from https://github.com/cenk1cenk2/docker-node-fnm/blob/master/Dockerfile
+
+ENV FNM_VERSION=1.31.0
+ENV FNM_DIR=/opt/fnm
+ENV FNM_INTERACTIVE_CLI=false
+ENV S6_VERSION=2.2.0.3
+ENV NODE_JS_VERSION=12.14.1
+
 WORKDIR /tmp
 
 # Install s6 overlay
@@ -82,7 +83,7 @@ RUN \
 
 RUN \
   # smoke test for fnm
-  /bin/bash -c "fnm env" && \
+  /bin/bash -c "eval $(fnm env --use-on-cd)" && \
   /bin/bash -c "fnm -V" && \
   # install latest node version as default
   /bin/bash -c "source /etc/bash.bashrc && fnm install ${NODE_JS_VERSION}" && \
@@ -140,7 +141,5 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 
 COPY ./start.sh .
 RUN chmod +x start.sh
-
-USER 1000:1000
 
 ENTRYPOINT [ "./start.sh" ]
