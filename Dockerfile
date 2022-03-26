@@ -1,10 +1,10 @@
 FROM ubuntu:18.04
 
-ENV FNM_VERSION 1.31.0
-ENV FNM_DIR /opt/fnm
-ENV FNM_INTERACTIVE_CLI false
-ENV S6_VERSION 2.2.0.3
-ENV NODE_JS_VERSION 12.14.1
+ENV FNM_VERSION=1.31.0
+ENV FNM_DIR=/opt/fnm
+ENV FNM_INTERACTIVE_CLI=false
+ENV S6_VERSION=2.2.0.3
+ENV NODE_JS_VERSION=12.14.1
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
