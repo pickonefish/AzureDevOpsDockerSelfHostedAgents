@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ENV NODE_JS_VERSION 12.02
+
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -59,15 +61,40 @@ RUN apt-get install -y dotnet-sdk-6.0
 WORKDIR /root
 ENV NVS_HOME="/root/.nvs"
 
-RUN curl -fsSL https://fnm.vercel.app/install | bash
-RUN source /root/.bashrc
-RUN eval $(fnm env)
-RUN fnm --version
-RUN fnm install 12.20
-RUN fnm use 12.20
+# copy from https://github.com/cenk1cenk2/docker-node-fnm/blob/master/Dockerfile
 
-RUN /usr/bin/node -v
-RUN /usr/bin/npm -v
+RUN   curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "/opt/fnm" --skip-shell && \
+      ln -s /opt/fnm/fnm /usr/bin/ && chmod +x /usr/bin/fnm
+
+RUN \
+  # smoke test for fnm
+  /bin/bash -c "fnm -V" && \
+  # install latest node version as default
+  /bin/bash -c "source /etc/bash.bashrc && fnm install ${NODE_JS_VERSION}" && \
+  /bin/bash -c "source /etc/bash.bashrc && fnm alias default ${NODE_JS_VERSION}" && \
+  # add fnm for bash
+  /bin/bash -c "source /etc/bash.bashrc && fnm use default" && \
+  /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/node" /usr/bin/node' && \
+  /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npm" /usr/bin/npm' && \
+  /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npx" /usr/bin/npx' \
+
+RUN \
+  # add yarn
+  /bin/bash -c "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -" && \
+  /bin/bash -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list' && \
+  /bin/bash -c 'apt-get update && apt-get install -y --no-install-recommends yarn' && \
+  echo -e 'export PATH="$PATH:$(yarn global bin)"' >> /etc/bash.bashrc
+
+RUN \
+  rm /root/.bashrc && \
+  ln -s /etc/bash.bashrc /root/.bashrc
+
+RUN \
+  # smoke test
+  /bin/bash -c "source /etc/bash.bashrc && node -v" && \
+  /bin/bash -c "source /etc/bash.bashrc && npm -v" && \
+  /bin/bash -c "source /etc/bash.bashrc && yarn -v"
+
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
