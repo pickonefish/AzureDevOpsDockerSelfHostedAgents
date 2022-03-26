@@ -99,9 +99,7 @@ RUN \
   /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npm" /usr/bin/npm' && \
   /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npx" /usr/bin/npx' \
 
-RUN \
-  rm /root/.bashrc && \
-  ln -s /etc/bash.bashrc /root/.bashrc
+COPY ./rootfs/etc/bash.bashrc /root/.bashrc
 
 RUN \
   # smoke test
