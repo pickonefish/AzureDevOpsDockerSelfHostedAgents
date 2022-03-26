@@ -65,6 +65,8 @@ ENV NODE_JS_VERSION=12.14.1
 
 WORKDIR /tmp
 
+COPY ./rootfs /
+
 # Install s6 overlay
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-amd64.tar.gz /tmp/
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
@@ -83,7 +85,6 @@ RUN \
 
 RUN \
   # smoke test for fnm
-  /bin/bash -c "eval $(fnm env --use-on-cd)" && \
   /bin/bash -c "fnm -V"
 
 RUN \
