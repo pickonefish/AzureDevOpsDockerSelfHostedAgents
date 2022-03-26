@@ -1,6 +1,10 @@
 FROM ubuntu:18.04
 
-ENV NODE_JS_VERSION 12.14
+ENV FNM_VERSION 1.31.0
+ENV FNM_DIR /opt/fnm
+ENV FNM_INTERACTIVE_CLI false
+ENV S6_VERSION 2.2.0.3
+ENV NODE_JS_VERSION 12.14.1
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
@@ -57,14 +61,24 @@ RUN rm packages-microsoft-prod.deb
 RUN apt-get update
 RUN apt-get install -y dotnet-sdk-6.0
 
-# Nodejs / NPM / NVS
-WORKDIR /root
-ENV NVS_HOME="/root/.nvs"
-
 # copy from https://github.com/cenk1cenk2/docker-node-fnm/blob/master/Dockerfile
+WORKDIR /tmp
 
-RUN   curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "/opt/fnm" --skip-shell && \
-      ln -s /opt/fnm/fnm /usr/bin/ && chmod +x /usr/bin/fnm
+# Install s6 overlay
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-amd64.tar.gz /tmp/
+RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
+  # create directories
+  mkdir -p /etc/services.d && mkdir -p /etc/cont-init.d && mkdir -p /s6-bin
+
+SHELL ["/bin/bash", "-c"]
+
+# Install fnm and initiate it
+RUN \
+  apt-get update && \
+  apt-get install -y curl unzip gnupg2 && \
+  # install fnm
+  curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "/opt/fnm" --skip-shell && \
+  ln -s /opt/fnm/fnm /usr/bin/ && chmod +x /usr/bin/fnm
 
 RUN \
   # smoke test for fnm
