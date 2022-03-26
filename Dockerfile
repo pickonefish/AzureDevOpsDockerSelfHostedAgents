@@ -60,6 +60,7 @@ WORKDIR /root
 ENV NVS_HOME="/root/.nvs"
 
 RUN curl -fsSL https://fnm.vercel.app/install | bash
+RUN source /root/.bashrc
 RUN eval $(fnm env)
 RUN fnm --version
 RUN fnm install 12.20
@@ -98,4 +99,6 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 COPY ./start.sh .
 RUN chmod +x start.sh
 
-ENTRYPOINT [ "./start.sh" ] 
+USER 1000:1000
+
+ENTRYPOINT [ "./start.sh" ]
