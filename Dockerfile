@@ -58,12 +58,11 @@ RUN apt-get install -y dotnet-sdk-6.0
 WORKDIR /root
 ENV NVS_HOME="/root/.nvs"
 
-RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
-RUN chmod 777 .nvs/nvs.sh
-RUN . "$NVS_HOME/nvs.sh" install
-
-RUN source /root/.bashrc & nvs add 12.20
-RUN source /root/.bashrc & nvs use 12.20 
+RUN curl -fsSL https://fnm.vercel.app/install | bash
+RUN eval $(fnm env)
+RUN fnm --version
+RUN fnm install 12.20
+RUN fnm use 12.20
 
 RUN /usr/bin/node -v
 RUN /usr/bin/npm -v
