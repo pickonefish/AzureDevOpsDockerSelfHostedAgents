@@ -84,10 +84,14 @@ RUN \
 RUN \
   # smoke test for fnm
   /bin/bash -c "eval $(fnm env --use-on-cd)" && \
-  /bin/bash -c "fnm -V" && \
+  /bin/bash -c "fnm -V"
+
+RUN \
   # install latest node version as default
   /bin/bash -c "source /etc/bash.bashrc && fnm install ${NODE_JS_VERSION}" && \
-  /bin/bash -c "source /etc/bash.bashrc && fnm alias default ${NODE_JS_VERSION}" && \
+  /bin/bash -c "source /etc/bash.bashrc && fnm alias default ${NODE_JS_VERSION}"
+
+RUN \
   # add fnm for bash
   /bin/bash -c "source /etc/bash.bashrc && fnm use default" && \
   /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/node" /usr/bin/node' && \
