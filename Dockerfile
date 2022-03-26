@@ -82,7 +82,7 @@ RUN \
 
 RUN \
   # smoke test for fnm
-  /bin/bash -c "eval $(fnm env)" && \
+  /bin/bash -c "fnm env" && \
   /bin/bash -c "fnm -V" && \
   # install latest node version as default
   /bin/bash -c "source /etc/bash.bashrc && fnm install ${NODE_JS_VERSION}" && \
