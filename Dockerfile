@@ -100,21 +100,13 @@ RUN \
   /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npx" /usr/bin/npx' \
 
 RUN \
-  # add yarn
-  /bin/bash -c "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -" && \
-  /bin/bash -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list' && \
-  /bin/bash -c 'apt-get update && apt-get install -y --no-install-recommends yarn' && \
-  echo -e 'export PATH="$PATH:$(yarn global bin)"' >> /etc/bash.bashrc
-
-RUN \
   rm /root/.bashrc && \
   ln -s /etc/bash.bashrc /root/.bashrc
 
 RUN \
   # smoke test
   /bin/bash -c "source /etc/bash.bashrc && node -v" && \
-  /bin/bash -c "source /etc/bash.bashrc && npm -v" && \
-  /bin/bash -c "source /etc/bash.bashrc && yarn -v"
+  /bin/bash -c "source /etc/bash.bashrc && npm -v"
 
 
 # Docker
