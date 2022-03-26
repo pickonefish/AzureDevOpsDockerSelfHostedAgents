@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV NODE_JS_VERSION 12.02
+ENV NODE_JS_VERSION 12.14
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
