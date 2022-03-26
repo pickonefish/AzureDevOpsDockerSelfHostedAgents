@@ -10,6 +10,7 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
+    unzip \
     jq \
     git \
     iputils-ping \
