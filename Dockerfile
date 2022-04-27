@@ -139,4 +139,6 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 COPY ./start.sh .
 RUN chmod +x start.sh
 
+USER 1000:1000
+
 ENTRYPOINT [ "./start.sh" ]
