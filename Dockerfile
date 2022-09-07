@@ -99,7 +99,18 @@ RUN \
   /bin/bash -c "source /etc/bash.bashrc && fnm use default" && \
   /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/node" /usr/bin/node' && \
   /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npm" /usr/bin/npm' && \
-  /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npx" /usr/bin/npx' \
+  /bin/bash -c 'source /etc/bash.bashrc && /bin/ln -s "/opt/fnm/aliases/default/bin/npx" /usr/bin/npx'
+
+RUN \
+  # install grail
+  curl -s https://gradle.org/next-steps/?version=7.5.1&format=bin && \
+  unzip -d /opt/gradle gradle-7.5.1-bin.zip
+ENV PATH=$PATH:/opt/gradle/bin
+
+RUN \
+  # install golang sdk
+  curl -s https://storage.googleapis.com/golang/go1.19.1.linux-amd64.tar.gz | tar -v -C /usr/local -xz  
+ENV PATH $PATH:/usr/local/go/bin
 
 COPY ./rootfs/etc/bash.bashrc /root/.bashrc
 
@@ -107,7 +118,6 @@ RUN \
   # smoke test
   /bin/bash -c "source /etc/bash.bashrc && node -v" && \
   /bin/bash -c "source /etc/bash.bashrc && npm -v"
-
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -126,7 +136,7 @@ RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
 
 ARG TARGETARCH=amd64
-ARG AGENT_VERSION=2.200.2
+ARG AGENT_VERSION=2.210.1
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
