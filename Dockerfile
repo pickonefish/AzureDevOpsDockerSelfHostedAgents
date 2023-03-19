@@ -92,6 +92,7 @@ RUN \
   /bin/bash -c "source /etc/bash.bashrc && fnm install 10.13" && \
   /bin/bash -c "source /etc/bash.bashrc && fnm install 12.11.1" && \
   /bin/bash -c "source /etc/bash.bashrc && fnm install 14.20.1" && \
+  /bin/bash -c "source /etc/bash.bashrc && fnm install 18.10.0" && \
   /bin/bash -c "source /etc/bash.bashrc && fnm install ${NODE_JS_VERSION}" && \
   /bin/bash -c "source /etc/bash.bashrc && fnm alias default ${NODE_JS_VERSION}"
 
