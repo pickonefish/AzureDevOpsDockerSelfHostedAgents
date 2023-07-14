@@ -105,9 +105,9 @@ RUN \
 
 RUN \
   # install grail
-  wget -q https://downloads.gradle-dn.com/distributions/gradle-7.5.1-bin.zip && \
-  unzip -d /opt/gradle gradle-7.5.1-bin.zip
-ENV PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
+  wget -q https://downloads.gradle.org/distributions/gradle-8.2.1-bin.zip && \
+  unzip -d /opt/gradle gradle-8.2.1-bin.zip
+ENV PATH=$PATH:/opt/gradle/gradle-8.2.1/bin
 
 RUN \
   # install golang sdk
