@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
@@ -6,6 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+COPY ./rootfs/etc/apt/sources.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -15,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     iputils-ping \
     libcurl4 \
-    libicu60 \
+#    libicu60 \
     libunwind8 \
     netcat \
     libssl1.0 \
@@ -47,12 +49,12 @@ RUN locale-gen zh_TW.UTF-8
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
 
-ARG TARGETARCH=amd64
-ARG AGENT_VERSION=2.210.1
+ARG TARGETARCH=x64
+ARG AGENT_VERSION=3.239.1
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-x64-${AGENT_VERSION}.tar.gz; \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz; \
     else \
       AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz; \
     fi; \
